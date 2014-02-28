@@ -1,4 +1,4 @@
 guice_exercise
 ==============
 
-Este es un ejercicio para la clase de Frameworks y Patrones de la especializaciÃ³n en desarrollo de software
+Este es un ejercicio para la clase de Frameworks y Patrones de la especialización en desarrollo de software
