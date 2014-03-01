@@ -19,6 +19,8 @@ public class Start{
 	     */
 	    BillingService billingService = injector.getInstance(BillingService.class);
 	    
+	    System.out.println("Hola Mundo: " + billingService.toString());
+	    
 	  }
 	
 }
