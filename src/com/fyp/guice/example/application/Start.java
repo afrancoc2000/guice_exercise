@@ -19,6 +19,11 @@ public class Start{
 	     */
 	    BillingService billingService = injector.getInstance(BillingService.class);
 	    
+	    PizzaOrder order = new PizzaOrder(100);
+	    CreditCard creditCard = new CreditCard("1234", 11, 2010);
+
+	    billingService.chargeOrder(order, creditCard);
+	    
 	  }
 	
 }
