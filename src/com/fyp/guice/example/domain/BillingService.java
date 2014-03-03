@@ -1,5 +1,6 @@
 package com.fyp.guice.example.domain;
 
+import com.fyp.guice.example.domain.interfaces.*;
 import com.fyp.guice.example.estructure.*;
 import com.google.inject.*;
 
