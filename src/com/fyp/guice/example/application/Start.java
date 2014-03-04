@@ -1,7 +1,5 @@
 package com.fyp.guice.example.application;
 
-import org.ops4j.peaberry.osgi.OSGiModule;
-
 import com.fyp.guice.example.bindings.*;
 import com.fyp.guice.example.domain.*;
 import com.google.inject.*;
@@ -14,7 +12,7 @@ public class Start{
 	     * instance. Most applications will call this method exactly once, in their
 	     * main() method.
 	     */
-	    Injector injector = Guice.createInjector(OSGiModule(BillingModule));
+	    Injector injector = Guice.createInjector(new BillingModule());
 
 	    /*
 	     * Now that we've got the injector, we can build objects.
