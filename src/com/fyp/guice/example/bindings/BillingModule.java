@@ -6,6 +6,13 @@ import com.google.inject.*;
 
 public class BillingModule extends AbstractModule{
 	
+	String processorName;
+	
+	public BillingModule(String processorName){
+		super();
+		this.processorName = processorName;
+	}
+	
 	@Override
 	protected void configure(){
 		/*
@@ -18,7 +25,13 @@ public class BillingModule extends AbstractModule{
 	      * Similarly, this binding tells Guice that when CreditCardProcessor is used in
 	      * a dependency, that should be satisfied with a PaypalCreditCardProcessor.
 	      */
-	    bind(CreditCardProcessor.class).to(PaypalCreditCardProcessor.class);
+	    try{
+			bind(CreditCardProcessor.class).to((Class<? extends CreditCardProcessor>)Class.forName(processorName));
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+
 		
 	}
 	
