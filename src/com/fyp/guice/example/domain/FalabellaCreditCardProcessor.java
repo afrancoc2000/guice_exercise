@@ -4,7 +4,7 @@ import com.fyp.guice.example.domain.interfaces.*;
 import com.fyp.guice.example.estructure.*;
 
 public class FalabellaCreditCardProcessor implements CreditCardProcessor{
-	private final double pizzaValue = 28000; 
+	private final double pizzaValue = 19000; 
 	
 	public ChargeResult charge(CreditCard creditCard, int orderAmount) throws UnreachableException{
 		ChargeResult result = new ChargeResult();

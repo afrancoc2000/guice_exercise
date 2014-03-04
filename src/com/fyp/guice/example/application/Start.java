@@ -33,6 +33,7 @@ public class Start{
 			
 		case Amex:
 			cardValueType = 2;
+			break;
 			
 		default:			
 			cardValueType = 3;			
