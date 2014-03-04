@@ -4,19 +4,31 @@ import com.fyp.guice.example.estructure.*;
 
 public class CreditCard{
 	
+	private int cardType;
 	private String nameInCard;
 	private int validThroughMonth; 
 	private int validThroughYear; 
 	private double debt;
 	private double maxDebt;
 	
-	public CreditCard(String nameInCard, int validThroughMonth, int validThroughYear){
+	public CreditCard(int cardType,String nameInCard, int validThroughMonth, int validThroughYear){
+		this.cardType = cardType;
 		this.nameInCard = nameInCard;
 		this.validThroughMonth = validThroughMonth;
 		this.validThroughYear = validThroughYear;
 		this.setMaxDebt(2000000);
 	}
 
+	public int getCardType()
+	{
+		return cardType;
+	}
+	
+	public void setCardType(int cardType)
+	{
+		this.cardType = cardType;
+	}
+	
 	public String getNameInCard(){
 		return nameInCard;
 	}
