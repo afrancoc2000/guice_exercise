@@ -12,8 +12,13 @@ public class Start{
 	     * instance. Most applications will call this method exactly once, in their
 	     * main() method.
 	     */
-		
-		Injector injector = Guice.createInjector(new BillingModule(args[0]));
+		Injector injector;
+		if (args[0] != null) {
+			injector = Guice.createInjector(new BillingModule(args[0]));
+		}
+		else{
+			injector = Guice.createInjector(new BillingModule("com.fyp.guice.example.domain.PaypalCreditCardProcessor"));
+		}
 
 	    /*
 	     * Now that we've got the injector, we can build objects.
