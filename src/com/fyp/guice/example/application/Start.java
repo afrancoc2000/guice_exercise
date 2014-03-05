@@ -7,41 +7,34 @@ import com.google.inject.*;
 public class Start{
 	
 	public static void main(String[] args) {
-	    /*
-	     * Guice.createInjector() takes your Modules, and returns a new Injector
-	     * instance. Most applications will call this method exactly once, in their
-	     * main() method.
-	     */
-		Injector injector;
-		if (args[0] != null) {
-			injector = Guice.createInjector(new BillingModule(args[0]));
-		}
-		else{
-			injector = Guice.createInjector(new BillingModule("com.fyp.guice.example.domain.PaypalCreditCardProcessor"));
-		}
 
-	    /*
-	     * Now that we've got the injector, we can build objects.
-	     */
-	    
+		
+		// Creacion de objeto injector generico
+		Injector injector ; 		
+
+		//Creacion de enumerado para determinar que tipo de injector utilizar
 	    CardType cardType = CardType.Visa;
 	    int cardValueType = -1;
 	    
 	    switch (cardType) {
 		case Visa:
 			cardValueType = 0;
+			injector = Guice.createInjector(new BillingModule());
 			break;
 
 		case MasterCard:
 			cardValueType = 1;
+			injector = Guice.createInjector(new GoogleWalletModule());
 			break;
 			
 		case Amex:
 			cardValueType = 2;
+			injector = Guice.createInjector(new BitCoinModule()); 
 			break;
 			
 		default:			
-			cardValueType = 3;			
+			cardValueType = 3;	
+			injector = Guice.createInjector(new DefaultModule());  
 			break;
 		}	    
 	    	
