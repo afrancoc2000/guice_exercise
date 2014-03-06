@@ -1,15 +1,35 @@
 package com.fyp.guice.example.application;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Enumeration;
+import java.util.jar.*;
 
 import com.fyp.guice.example.bindings.*;
-import com.fyp.guice.example.domain.*;
-import com.fyp.guice.example.domain.interfaces.*;
 import com.google.inject.*;
 
 public class Start{
 	
 	public static void main(String[] args) throws ClassNotFoundException {
+		
+		String pathToJar = "/Users/sebastian/Documents/workspace/guice_exercise/lib/guice-3.0/guiceDomain.jar";
+		JarFile jarFile = new JarFile(pathToJar);
+        Enumeration<JarEntry> e = jarFile.entries();
+
+        URL[] urls = { new URL("jar:file:" + pathToJar+"!/") };
+        URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+        while (e.hasMoreElements()) {
+            JarEntry je = (JarEntry) e.nextElement();
+            if(je.isDirectory() || !je.getName().endsWith(".class")){
+                continue;
+            }
+            // -6 because of .class
+            String className = je.getName().substring(0,je.getName().length()-6);
+            className = className.replace('/', '.');
+            Class<?> c = cl.loadClass(className);
+        }
 		
 		// Leer tipo de tarjeta
 		BufferedReader lectura = new BufferedReader(new InputStreamReader(System.in));
@@ -17,9 +37,9 @@ public class Start{
 		System.out.println("Ingrese su tipo de tarjeta: ");
 		try {
 			inCardType = Integer.parseInt(lectura.readLine());
-		} catch (IOException e) {
+		} catch (IOException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 		
 	    /*
