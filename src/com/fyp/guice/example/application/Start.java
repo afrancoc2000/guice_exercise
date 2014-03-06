@@ -4,9 +4,6 @@ import com.fyp.guice.example.domain.*;
 import com.fyp.guice.example.domain.interfaces.*;
 
 import java.io.*;
-
-import com.fyp.guice.example.domain.*;
-import com.fyp.guice.example.domain.interfaces.*;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
