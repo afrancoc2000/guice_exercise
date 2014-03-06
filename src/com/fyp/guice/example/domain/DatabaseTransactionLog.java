@@ -7,14 +7,17 @@ public class DatabaseTransactionLog implements TransactionLog{
 
 	@Override
 	public void logChargeResult(ChargeResult result){
-		// TODO Auto-generated method stub
-		
+		if(result.wasSuccessful()){
+			System.out.print("Transacción aceptada, por un valor de: " + result.getTransValue());
+		}
+		else{
+			System.out.print("Transacción denegada por el sistema");
+		}
 	}
 
 	@Override
 	public void logConnectException(UnreachableException e){
-		// TODO Auto-generated method stub
-		
+		System.out.print("Transacción no realizada por errores de comunicación");
 	}
 	
 }

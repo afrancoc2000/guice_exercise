@@ -1,15 +1,21 @@
 package com.fyp.guice.example.domain;
 
 public enum CardType {
-Visa(0),
-MasterCard(1),
-Amex(2);
+    Paypal(0),
+    GoogleWallet(1),
+    Falabella(2);
+    
+    private int value;
+    
+    private CardType (int value){
+    	this.setValue(value);
+    }
 
-private int value;
+	public int getValue(){
+		return value;
+	}
 
-private CardType (int value)
-{
-	this.value = value;
-}
-
+	private void setValue(int value){
+		this.value = value;
+	}
 }
