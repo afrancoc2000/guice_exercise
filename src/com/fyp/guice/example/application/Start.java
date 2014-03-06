@@ -1,6 +1,9 @@
 package com.fyp.guice.example.application;
 
 import java.io.*;
+
+import com.fyp.guice.example.domain.*;
+import com.fyp.guice.example.domain.interfaces.*;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
