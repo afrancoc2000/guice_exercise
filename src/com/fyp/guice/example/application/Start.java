@@ -1,17 +1,24 @@
 package com.fyp.guice.example.application;
 
-import com.fyp.guice.example.domain.*;
-import com.fyp.guice.example.domain.interfaces.*;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.jar.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
-import com.fyp.guice.example.bindings.*;
-import com.google.inject.*;
+import com.fyp.guice.example.bindings.BillingModule;
+import com.fyp.guice.example.domain.BillingService;
+import com.fyp.guice.example.domain.CreditCard;
+import com.fyp.guice.example.domain.FalabellaCreditCardProcessor;
+import com.fyp.guice.example.domain.GoogleWalletProcessor;
+import com.fyp.guice.example.domain.PaypalCreditCardProcessor;
+import com.fyp.guice.example.domain.PizzaOrder;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class Start{
 	
@@ -22,33 +29,6 @@ public class Start{
 	
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		
-		int reintentos = 0;
-//		while (reintentos <= 2){
-//			reintentos = reintentos + 1;
-		
-			String pathToJar = "/Users/sebastian/Documents/workspace/guice_exercise/lib/guice-3.0/processors.jar";
-			JarFile jarFile = new JarFile(pathToJar);
-	        Enumeration<JarEntry> e = jarFile.entries();
-	
-	        URL[] urls = { new URL("jar:file:" + pathToJar+"!/") };
-	        URLClassLoader cl = URLClassLoader.newInstance(urls);
-	        
-	        HashMap<String, Class> clases = new HashMap<String, Class>();
-	
-	        while (e.hasMoreElements()) {
-	            JarEntry je = (JarEntry) e.nextElement();
-	            if(je.isDirectory() || !je.getName().endsWith(".class")){
-	                continue;
-	            }
-	            // -6 because of .class
-	            String className = je.getName().substring(0,je.getName().length()-6);
-	            if (!clases.containsKey(className))
-		        {	className = className.replace('/', '.');
-		            Class<?> c = cl.loadClass(className);
-		            clases.put(className, c);
-		        }
-	        }
-			
 			// Leer tipo de tarjeta
 			BufferedReader lectura = new BufferedReader(new InputStreamReader(System.in));
 			int inCardType = 0;
@@ -93,6 +73,40 @@ public class Start{
 	    				break;
 	    				
 	    			default:
+	    				
+	    				System.out.println("Ingrese la ruta al jar que contiene su clase: ");
+	    				System.out.println("Recuerde que su clase debe implementar la interface CreditCardProcessor ");
+	    				String pathToJar = null;
+	    				try {
+	    					pathToJar = lectura.readLine();
+	    				} catch (IOException ex) {
+	    					// TODO Auto-generated catch block
+	    					ex.printStackTrace();
+	    				}
+	    				
+	    				JarFile jarFile = new JarFile(pathToJar);
+	    		        Enumeration<JarEntry> e = jarFile.entries();
+	    		
+	    		        URL[] urls = { new URL("jar:file:" + pathToJar+"!/") };
+	    		        URLClassLoader cl = URLClassLoader.newInstance(urls);
+	    		        
+	    		        HashMap<String, Class> clases = new HashMap<String, Class>();
+	    		
+	    		        while (e.hasMoreElements()) {
+	    		            JarEntry je = e.nextElement();
+	    		            if(je.isDirectory() || !je.getName().endsWith(".class")){
+	    		                continue;
+	    		            }
+	    		            // -6 because of .class
+	    		            String className = je.getName().substring(0,je.getName().length()-6);
+	    		            if (!clases.containsKey(className))
+	    			        {	className = className.replace('/', '.');
+	    			            Class<?> c = cl.loadClass(className);
+	    			            clases.put(className, c);
+	    			        }
+	    		        }
+	    		        jarFile.close();	    				
+	    				
 	    				System.out.println("Ingrese su clase: ");
 	    				String clase = null;
 	    				try {
@@ -101,7 +115,7 @@ public class Start{
 	    					// TODO Auto-generated catch block
 	    					ex.printStackTrace();
 	    				}
-	    				injector = Guice.createInjector(new BillingModule((Class<? extends CreditCardProcessor>)clases.get(clase)));
+	    				injector = Guice.createInjector(new BillingModule(clases.get(clase)));
 	    				System.out.println("Tarjeta ingresada: Custom");
 	    				break;
 				}	    
