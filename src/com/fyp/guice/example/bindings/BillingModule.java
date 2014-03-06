@@ -6,6 +6,13 @@ import com.google.inject.*;
 
 public class BillingModule extends AbstractModule{
 	
+	Class<? extends CreditCardProcessor> creditCardProcessorClass;
+	
+	public BillingModule(Class<? extends CreditCardProcessor> creditCardProcessorClass){
+		super();
+		this.creditCardProcessorClass = creditCardProcessorClass;
+	}
+	
 	@Override
 	protected void configure(){
 		/*
@@ -14,11 +21,8 @@ public class BillingModule extends AbstractModule{
 	      */
 	    bind(TransactionLog.class).to(DatabaseTransactionLog.class);
 
-	     /*
-	      * Similarly, this binding tells Guice that when CreditCardProcessor is used in
-	      * a dependency, that should be satisfied with a PaypalCreditCardProcessor.
-	      */
-	    bind(CreditCardProcessor.class).to(PaypalCreditCardProcessor.class);
+    	bind(CreditCardProcessor.class).to(creditCardProcessorClass);
+
 		
 	}
 	

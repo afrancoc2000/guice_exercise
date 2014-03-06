@@ -3,8 +3,8 @@ package com.fyp.guice.example.domain;
 import com.fyp.guice.example.domain.interfaces.CreditCardProcessor;
 import com.fyp.guice.example.estructure.*;
 
-public class PaypalCreditCardProcessor implements CreditCardProcessor{
-	private final double pizzaValue = 30000; 
+public class FalabellaCreditCardProcessor implements CreditCardProcessor{
+	private final double pizzaValue = 19000; 
 	
 	public ChargeResult charge(CreditCard creditCard, int orderAmount) throws UnreachableException{
 		ChargeResult result = new ChargeResult();
