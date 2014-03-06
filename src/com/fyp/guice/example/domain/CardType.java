@@ -3,7 +3,8 @@ package com.fyp.guice.example.domain;
 public enum CardType {
     Paypal(0),
     GoogleWallet(1),
-    Falabella(2);
+    Falabella(2),
+    Custom(3);
     
     private int value;
     

@@ -32,12 +32,13 @@ public class Start{
 		CardType cardType = null;
 		if (inCardType == 0) cardType = CardType.Paypal;
 		else if (inCardType == 1) cardType = CardType.GoogleWallet;
-		else cardType = CardType.Falabella;
+		else if (inCardType == 2) cardType = CardType.Falabella;
+		else cardType = CardType.Custom;
 
-	    if (args.length > 0) {
-			injector = Guice.createInjector(new BillingModule((Class<? extends CreditCardProcessor>)Class.forName(args[0])));
-		}
-		else{
+	    //if (args.length > 0) {
+		//	injector = Guice.createInjector(new BillingModule((Class<? extends CreditCardProcessor>)Class.forName(args[0])));
+		//}
+		//else{
     	    switch (cardType) {
     			case Paypal:
     				injector = Guice.createInjector(new BillingModule(PaypalCreditCardProcessor.class));
@@ -54,20 +55,24 @@ public class Start{
     				System.out.println("Tarjeta ingresada: Falabella");
     				break;
     				
-    			default:			
-    				injector = Guice.createInjector(new BillingModule(PaypalCreditCardProcessor.class));
-    				System.out.println("Tarjeta no valida");
+    			default:
+    				System.out.println("Ingrese su clase: ");
+    				String clase = null;
+    				try {
+    					clase = lectura.readLine();
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				injector = Guice.createInjector(new BillingModule((Class<? extends CreditCardProcessor>)Class.forName(clase)));
+    				System.out.println("Tarjeta ingresada: Custom");
     				break;
 			}	    
-		}
-    		
-        	injector = Guice.createInjector(new BillingModule(PaypalCreditCardProcessor.class));
-    	
+		//}
 
 	    /*
 	     * Now that we've got the injector, we can build objects.
 	     */
-	    
 	    
 	    BillingService billingService = injector.getInstance(BillingService.class);
 	    
