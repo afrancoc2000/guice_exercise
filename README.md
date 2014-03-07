@@ -7,6 +7,8 @@ Para que el programa funcione correctamente despues de descargar el código se de
 
 Una vez organizado el proyecto se debe correr con la clase start en el paquete com.fyp.guice.example.application
 
+El programa se corre por consola, ofrece 4 posibilidades, "0- Paypal", "1- Google Wallet", "2- Falabella" y "3- Custom", cuando se elige una de las 3 primeras opciones la aplicación corre el BillingService con el CreditCardProcessor correspondiente a la tarjeta de crédito elegida, la cuarta opción, Custom, permite cargar un jar en el sistema y elegir una clase para correr como creditCardProcesor para que el sistema funcione correctamente, la clase debe implementar la interface CreditCardProcessor.
+
 El error en el documento se encuentra en este parrafo:
 
 Dependency Injection
